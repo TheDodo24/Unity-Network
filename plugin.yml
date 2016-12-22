@@ -1,0 +1,16 @@
+name: Unity-Wartung
+version: 1.0.0
+author: Fabtopf
+main: de.Fabtopf.Utilities.Wartung
+
+depend: [Unity-Utilities]
+
+commands:
+  wartung:
+    usage: /<command>
+    description: Einstellungen des Wartungs-Plugins
+
+
+permissions:
+  fab.wartung:
+    default: op
