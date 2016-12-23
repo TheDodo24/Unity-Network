@@ -25,7 +25,7 @@ public class onInventoryClick implements Listener {
 		pl.getServer().getPluginManager().registerEvents(this, pl);
 	}
 
-	@SuppressWarnings({ "deprecation", "unchecked" })
+	@SuppressWarnings({ "unchecked" })
 	@EventHandler
 	public void inventoryClick(InventoryClickEvent e) {
 		Player p = (Player) e.getWhoClicked();
@@ -79,8 +79,7 @@ public class onInventoryClick implements Listener {
 			switch (e.getCurrentItem().getType()) {
 			case SKULL_ITEM:
 				SkullMeta meta = (SkullMeta) e.getCurrentItem().getItemMeta();
-				String owner = meta.getOwner();
-				String name = Bukkit.getOfflinePlayer(owner).getName();
+				String owner = ChatColor.stripColor(meta.getDisplayName());
 
 				List<String> list = new ArrayList<String>();
 
@@ -91,7 +90,7 @@ public class onInventoryClick implements Listener {
 				}
 
 				if (list.contains(owner)) {
-					InvGUI.WartungRemove(p, name);
+					InvGUI.WartungRemove(p, owner);
 				} else {
 					p.sendMessage(Wartung.getPrefix() + "Der Spieler §e" + owner + " §cist nicht auf der Whtitelist!");
 					InvGUI.WartungPlayer(p);
@@ -123,7 +122,7 @@ public class onInventoryClick implements Listener {
 			switch (e.getCurrentItem().getType()) {
 			case SKULL_ITEM:
 				SkullMeta meta = (SkullMeta) e.getCurrentItem().getItemMeta();
-				String owner = meta.getOwner();
+				String owner = ChatColor.stripColor(meta.getDisplayName());
 
 				List<String> list = new ArrayList<String>();
 

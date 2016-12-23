@@ -109,13 +109,20 @@ public class InvGUI {
 		p.openInventory(i);
 	}
 
+	@SuppressWarnings("deprecation")
 	public static void WartungRemove(Player p, String target) {
 		Inventory i = Bukkit.createInventory(null, 9, "§cUnity Wartung Remove");
 
 		ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 		SkullMeta headMeta = (SkullMeta) head.getItemMeta();
-		headMeta.setOwner(target);
-		headMeta.setDisplayName("§4" + target + " entfernen");
+
+		String skullowner = Bukkit.getOfflinePlayer(target).getName();
+		if (skullowner == null) {
+			skullowner = "Steve";
+		}
+
+		headMeta.setOwner(skullowner);
+		headMeta.setDisplayName("§4" + target);
 
 		List<String> lore = new ArrayList<String>();
 		lore.add("§eUm den Spieler");
@@ -140,7 +147,7 @@ public class InvGUI {
 	public static void WartungAdd(Player p) {
 		AnvilGUI gui = new AnvilGUI(p, new AnvilGUI.AnvilClickEventHandler() {
 
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "deprecation" })
 			@Override
 			public void onAnvilClick(AnvilClickEvent event) {
 				if (event.getSlot() == AnvilGUI.AnvilSlot.OUTPUT) {
@@ -154,15 +161,19 @@ public class InvGUI {
 						Bukkit.getLogger().warning("[Unity Wartung] In der Whitelist-Datei wurde ein Fehler gefunden!");
 					}
 
-					if (!list.contains(event.getName())) {
-						list.add(event.getName());
-						Wartung.wartung.set("players", list);
+					if (event.getName() != null && !event.getName().equals(" ") && !event.getName().equals("")
+							&& Bukkit.getOfflinePlayer(event.getName()) != null) {
+						String text = event.getName().replace(" ", "_");
+						if (!list.contains(text)) {
+							list.add(text);
+							Wartung.wartung.set("players", list);
 
-						p.sendMessage(Wartung.getPrefix() + "Der Spieler §e" + event.getName()
-								+ " §cwurde zur Whitelist hinzugefügt!");
-					} else {
-						p.sendMessage(Wartung.getPrefix() + "Der Spieler §e" + event.getName()
-								+ " §cist bereits auf der Whitelist!");
+							p.sendMessage(Wartung.getPrefix() + "Der Spieler §e" + text
+									+ " §cwurde zur Whitelist hinzugefügt!");
+						} else {
+							p.sendMessage(Wartung.getPrefix() + "Der Spieler §e" + text
+									+ " §cist bereits auf der Whitelist!");
+						}
 					}
 
 					InvGUI.WartungPlayer(p);
@@ -175,7 +186,7 @@ public class InvGUI {
 
 		ItemStack paper = new ItemStack(Material.PAPER);
 		ItemMeta paperMeta = paper.getItemMeta();
-		paperMeta.setDisplayName("§cSpieler zum hinzufügen");
+		paperMeta.setDisplayName("Spieler");
 		paper.setItemMeta(paperMeta);
 
 		gui.setSlot(AnvilGUI.AnvilSlot.INPUT_LEFT, paper);
