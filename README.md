@@ -2,10 +2,10 @@
 
 
 # Commands:
-  Spieler:
+- Spieler:
   *  /wartung - fab.wartung - Wartungs-Management
     
-  Console:
+- Console:
   *  wartung - Ein-/Ausschalten der Wartung [toggle]
     
 # Permissions:
