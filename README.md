@@ -9,4 +9,4 @@
   *  wartung - Ein-/Ausschalten der Wartung [toggle]
     
 # Permissions:
-  fab.wartung - Gibt Zugriff auf den Befehl /wartung
+- fab.wartung - Gibt Zugriff auf den Befehl /wartung
