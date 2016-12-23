@@ -97,8 +97,14 @@ public class InvGUI {
 		addMeta.setDisplayName("§eSpieler §ahinzufügen");
 		add.setItemMeta(addMeta);
 
+		ItemStack refresh = new ItemStack(Material.DIAMOND);
+		ItemMeta refreshMeta = refresh.getItemMeta();
+		refreshMeta.setDisplayName("§cAktualisieren");
+		refresh.setItemMeta(refreshMeta);
+
 		i.setItem(45, close);
 		i.setItem(49, add);
+		i.setItem(53, refresh);
 
 		p.openInventory(i);
 	}
@@ -120,7 +126,13 @@ public class InvGUI {
 		headMeta.setLore(lore);
 		head.setItemMeta(headMeta);
 
+		ItemStack cancel = new ItemStack(Material.BARRIER);
+		ItemMeta cancelMeta = cancel.getItemMeta();
+		cancelMeta.setDisplayName("§cCancel");
+		cancel.setItemMeta(cancelMeta);
+
 		i.setItem(4, head);
+		i.setItem(8, cancel);
 
 		p.openInventory(i);
 	}

@@ -81,13 +81,30 @@ public class onInventoryClick implements Listener {
 				SkullMeta meta = (SkullMeta) e.getCurrentItem().getItemMeta();
 				String owner = meta.getOwner();
 				String name = Bukkit.getOfflinePlayer(owner).getName();
-				InvGUI.WartungRemove(p, name);
+
+				List<String> list = new ArrayList<String>();
+
+				try {
+					list = (List<String>) Wartung.wartung.getObject("players");
+				} catch (Exception ex) {
+					Bukkit.getLogger().warning("[Unity Wartung] In der Whitelist-Datei wurde ein Fehler gefunden!");
+				}
+
+				if (list.contains(owner)) {
+					InvGUI.WartungRemove(p, name);
+				} else {
+					p.sendMessage(Wartung.getPrefix() + "Der Spieler §e" + owner + " §cist nicht auf der Whtitelist!");
+					InvGUI.WartungPlayer(p);
+				}
 				break;
 			case BARRIER:
 				p.closeInventory();
 				break;
 			case ANVIL:
 				InvGUI.WartungAdd(p);
+				break;
+			case DIAMOND:
+				InvGUI.WartungPlayer(p);
 				break;
 			default:
 				break;
@@ -116,8 +133,17 @@ public class onInventoryClick implements Listener {
 					Bukkit.getLogger().warning("[Unity Wartung] In der Whitelist-Datei wurde ein Fehler gefunden!");
 				}
 
-				list.remove(owner);
-				Wartung.wartung.set("players", list);
+				if (list.contains(owner)) {
+					list.remove(owner);
+					Wartung.wartung.set("players", list);
+				} else {
+					p.sendMessage(Wartung.getPrefix() + "Der Spieler §e" + owner
+							+ " §cist bereits nicht mehr auf der Whtitelist!");
+				}
+
+				InvGUI.WartungPlayer(p);
+				break;
+			case BARRIER:
 				InvGUI.WartungPlayer(p);
 				break;
 			default:
