@@ -35,15 +35,24 @@ public class Wartung extends JavaPlugin {
 	}
 
 	public void registerConfig() {
-		general.addDefault("MySQL", false);
-		general.addDefault("Wartung", false);
-		general.addDefault("Prefix", "&8[&cWartung&8] &c");
-		general.addDefault("KickMessage",
-				"&e&lDer Unity Minecraft-Server befindet sich\nmomentan in Wartungsarbeiten.\n\n&cWir bitten um Verständnis.");
-
-		List<String> whitelist = new ArrayList<String>();
-		whitelist.add("Fabtopf");
-		wartung.addDefault("players", whitelist);
+		if (general.getObject("MySQL") == null) {
+			general.addDefault("MySQL", false);
+		}
+		if (general.getObject("Wartung") == null) {
+			general.addDefault("Wartung", false);
+		}
+		if (general.getObject("Prefix") == null) {
+			general.addDefault("Prefix", "&8[&cWartung&8] &c");
+		}
+		if (general.getObject("MySQL") == null) {
+			general.addDefault("KickMessage",
+					"&e&lDer Unity Minecraft-Server befindet sich\nmomentan in Wartungsarbeiten.\n\n&cWir bitten um Verständnis.");
+		}
+		if (wartung.getObject("players") == null) {
+			List<String> whitelist = new ArrayList<String>();
+			whitelist.add("Fabtopf");
+			wartung.addDefault("players", whitelist);
+		}
 
 		prefix = ChatColor.translateAlternateColorCodes('&', general.getString("Prefix"));
 	}
